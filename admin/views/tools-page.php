@@ -186,38 +186,126 @@ endif;
 
 	<?php if ( is_array( $preview ) ) : ?>
 		<h3><?php esc_html_e( 'Latest Preview Results', 'wordpress-content-find-replace' ); ?></h3>
-		<p><?php printf( esc_html__( 'Generated at %s', 'wordpress-content-find-replace' ), esc_html( (string) ( $preview['generated_at'] ?? '' ) ) ); ?></p>
+		<p class="description">
+			<?php
+			printf(
+				/* translators: %s: ISO8601 date string. */
+				esc_html__( 'Generated at %s', 'wordpress-content-find-replace' ),
+				esc_html( (string) ( $preview['generated_at'] ?? '' ) )
+			);
+			?>
+		</p>
 		<?php if ( ! empty( $preview['errors'] ) && is_array( $preview['errors'] ) ) : ?>
 			<div class="notice notice-warning"><ul>
-				<?php foreach ( $preview['errors'] as $error ) : ?>
-					<li><?php echo esc_html( (string) $error ); ?></li>
+				<?php foreach ( $preview['errors'] as $preview_error ) : ?>
+					<li><?php echo esc_html( (string) $preview_error ); ?></li>
 				<?php endforeach; ?>
 			</ul></div>
 		<?php endif; ?>
-		<table class="widefat striped">
-			<thead>
-				<tr>
-					<th><?php esc_html_e( 'Post ID', 'wordpress-content-find-replace' ); ?></th>
-					<th><?php esc_html_e( 'Title', 'wordpress-content-find-replace' ); ?></th>
-					<th><?php esc_html_e( 'Before', 'wordpress-content-find-replace' ); ?></th>
-					<th><?php esc_html_e( 'After', 'wordpress-content-find-replace' ); ?></th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php if ( ! empty( $preview['items'] ) && is_array( $preview['items'] ) ) : ?>
-					<?php foreach ( $preview['items'] as $item ) : ?>
-						<tr>
-							<td><?php echo esc_html( (string) ( $item['post_id'] ?? '' ) ); ?></td>
-							<td><?php echo esc_html( (string) ( $item['post_title'] ?? '' ) ); ?></td>
-							<td><?php echo esc_html( (string) ( $item['before_snippet'] ?? '' ) ); ?></td>
-							<td><?php echo esc_html( (string) ( $item['after_snippet'] ?? '' ) ); ?></td>
-						</tr>
+
+		<?php
+		$preview_scope_rule_ids      = isset( $preview['scope']['rule_ids'] ) && is_array( $preview['scope']['rule_ids'] ) ? $preview['scope']['rule_ids'] : null;
+		$preview_scope_post_types    = isset( $preview['scope']['post_types'] ) && is_array( $preview['scope']['post_types'] ) ? $preview['scope']['post_types'] : array();
+		$preview_scope_post_statuses = isset( $preview['scope']['post_statuses'] ) && is_array( $preview['scope']['post_statuses'] ) ? $preview['scope']['post_statuses'] : array();
+		?>
+
+		<?php if ( ! empty( $preview['items'] ) && is_array( $preview['items'] ) ) : ?>
+			<p><?php printf( esc_html__( '%d post(s) will be affected.', 'wordpress-content-find-replace' ), count( $preview['items'] ) ); ?></p>
+			<?php foreach ( $preview['items'] as $preview_item ) : ?>
+				<?php
+				$p_id       = (int) ( $preview_item['post_id'] ?? 0 );
+				$p_title    = (string) ( $preview_item['post_title'] ?? '' );
+				$p_type     = (string) ( $preview_item['post_type'] ?? '' );
+				$p_changes  = isset( $preview_item['changes'] ) && is_array( $preview_item['changes'] ) ? $preview_item['changes'] : array();
+				$p_view_url = get_permalink( $p_id );
+				$p_edit_url = get_edit_post_link( $p_id );
+				?>
+				<div class="wcfr-preview-item">
+					<div class="wcfr-preview-item-header">
+						<span class="wcfr-preview-post-meta">
+							<span class="wcfr-preview-post-id">#<?php echo esc_html( (string) $p_id ); ?></span>
+							<?php if ( $p_view_url ) : ?>
+								<a href="<?php echo esc_url( $p_view_url ); ?>" target="_blank" rel="noopener"><?php echo esc_html( $p_title ?: __( '(no title)', 'wordpress-content-find-replace' ) ); ?></a>
+							<?php else : ?>
+								<?php echo esc_html( $p_title ?: __( '(no title)', 'wordpress-content-find-replace' ) ); ?>
+							<?php endif; ?>
+							<?php if ( $p_edit_url ) : ?>
+								<a href="<?php echo esc_url( $p_edit_url ); ?>" class="wcfr-edit-link"><?php esc_html_e( '(edit)', 'wordpress-content-find-replace' ); ?></a>
+							<?php endif; ?>
+							<span class="wcfr-post-type-badge"><?php echo esc_html( $p_type ); ?></span>
+						</span>
+						<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="wcfr-apply-single-form">
+							<input type="hidden" name="action" value="wcfr_migration_apply_single" />
+							<input type="hidden" name="wcfr_post_id" value="<?php echo esc_attr( (string) $p_id ); ?>" />
+							<?php if ( null !== $preview_scope_rule_ids ) : ?>
+								<?php foreach ( $preview_scope_rule_ids as $rid ) : ?>
+									<input type="hidden" name="wcfr_scope[rule_ids][]" value="<?php echo esc_attr( (string) $rid ); ?>" />
+								<?php endforeach; ?>
+							<?php endif; ?>
+							<?php foreach ( $preview_scope_post_types as $pt ) : ?>
+								<input type="hidden" name="wcfr_scope[post_types][]" value="<?php echo esc_attr( (string) $pt ); ?>" />
+							<?php endforeach; ?>
+							<?php foreach ( $preview_scope_post_statuses as $ps ) : ?>
+								<input type="hidden" name="wcfr_scope[post_statuses][]" value="<?php echo esc_attr( (string) $ps ); ?>" />
+							<?php endforeach; ?>
+							<?php wp_nonce_field( 'wcfr_migration_apply_single' ); ?>
+							<?php submit_button( __( 'Apply to this post', 'wordpress-content-find-replace' ), 'small', 'submit', false, array( 'onclick' => "return confirm('Apply changes to this post now?');" ) ); ?>
+						</form>
+					</div>
+
+					<?php foreach ( $p_changes as $change ) : ?>
+						<div class="wcfr-change-group">
+							<?php if ( 'wikimedia' === ( $change['type'] ?? '' ) ) : ?>
+								<div class="wcfr-diff-line wcfr-diff-remove"><span class="wcfr-diff-marker">-</span><code><?php echo esc_html( (string) ( $change['from'] ?? '' ) ); ?></code></div>
+								<div class="wcfr-diff-line wcfr-diff-add"><span class="wcfr-diff-marker">+</span><code><?php echo esc_html( (string) ( $change['to'] ?? '' ) ); ?></code></div>
+							<?php elseif ( ! empty( $change['snippets'] ) && is_array( $change['snippets'] ) ) : ?>
+								<?php foreach ( $change['snippets'] as $snippet ) : ?>
+									<div class="wcfr-diff-context-block">
+										<div class="wcfr-diff-line wcfr-diff-remove">
+											<span class="wcfr-diff-marker">-</span>
+											<?php if ( ! empty( $snippet['truncated_before'] ) ) : ?><span class="wcfr-ctx-ellipsis">&hellip;</span><?php endif; ?>
+											<span class="wcfr-ctx"><?php echo esc_html( (string) ( $snippet['ctx_before'] ?? '' ) ); ?></span><span class="wcfr-diff-highlight"><?php echo esc_html( (string) ( $snippet['matched'] ?? '' ) ); ?></span><span class="wcfr-ctx"><?php echo esc_html( (string) ( $snippet['ctx_after'] ?? '' ) ); ?></span>
+											<?php if ( ! empty( $snippet['truncated_after'] ) ) : ?><span class="wcfr-ctx-ellipsis">&hellip;</span><?php endif; ?>
+										</div>
+										<div class="wcfr-diff-line wcfr-diff-add">
+											<span class="wcfr-diff-marker">+</span>
+											<?php if ( ! empty( $snippet['truncated_before'] ) ) : ?><span class="wcfr-ctx-ellipsis">&hellip;</span><?php endif; ?>
+											<span class="wcfr-ctx"><?php echo esc_html( (string) ( $snippet['ctx_before'] ?? '' ) ); ?></span><span class="wcfr-diff-highlight"><?php echo esc_html( (string) ( $snippet['replacement'] ?? '' ) ); ?></span><span class="wcfr-ctx"><?php echo esc_html( (string) ( $snippet['ctx_after'] ?? '' ) ); ?></span>
+											<?php if ( ! empty( $snippet['truncated_after'] ) ) : ?><span class="wcfr-ctx-ellipsis">&hellip;</span><?php endif; ?>
+										</div>
+									</div>
+								<?php endforeach; ?>
+								<?php
+								$shown      = count( $change['snippets'] );
+								$total      = (int) ( $change['occurrences'] ?? $shown );
+								$remaining  = $total - $shown;
+								if ( $remaining > 0 ) :
+									?>
+									<p class="wcfr-more-occurrences">
+										<?php
+										printf(
+											/* translators: %d number of additional occurrences. */
+											esc_html__( '&hellip; and %d more occurrence(s) in this post.', 'wordpress-content-find-replace' ),
+											$remaining
+										);
+										?>
+									</p>
+								<?php endif; ?>
+							<?php else : ?>
+								<p class="wcfr-change-fallback">
+									<code><?php echo esc_html( (string) ( $change['from'] ?? $change['pattern'] ?? '' ) ); ?></code>
+									<span class="wcfr-diff-arrow">&rarr;</span>
+									<code><?php echo esc_html( (string) ( $change['to'] ?? $change['replacement'] ?? '' ) ); ?></code>
+									<span class="wcfr-occurrence-count">(<?php echo esc_html( (string) ( $change['occurrences'] ?? 1 ) ); ?> occurrence(s))</span>
+								</p>
+							<?php endif; ?>
+						</div>
 					<?php endforeach; ?>
-				<?php else : ?>
-					<tr><td colspan="4"><?php esc_html_e( 'No rewrite candidates found.', 'wordpress-content-find-replace' ); ?></td></tr>
-				<?php endif; ?>
-			</tbody>
-		</table>
+				</div>
+			<?php endforeach; ?>
+		<?php else : ?>
+			<p><?php esc_html_e( 'No rewrite candidates found.', 'wordpress-content-find-replace' ); ?></p>
+		<?php endif; ?>
 	<?php endif; ?>
 
 	<h3><?php esc_html_e( 'Available Rollbacks', 'wordpress-content-find-replace' ); ?></h3>

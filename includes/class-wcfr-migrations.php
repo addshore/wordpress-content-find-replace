@@ -146,6 +146,77 @@ class WCFR_Migrations {
 	}
 
 	/**
+	 * Apply migration to a single post.
+	 *
+	 * @param int                 $post_id Post ID.
+	 * @param array<string,mixed> $scope   Scope (may include rule_ids).
+	 * @return array<string,mixed>
+	 */
+	public function apply_single( int $post_id, array $scope ): array {
+		$rule_ids = isset( $scope['rule_ids'] ) && is_array( $scope['rule_ids'] ) ? $scope['rule_ids'] : null;
+
+		$post = get_post( $post_id );
+		if ( ! $post instanceof WP_Post ) {
+			return array(
+				'run_id'  => '',
+				'updated' => false,
+				'message' => __( 'Post not found.', 'wordpress-content-find-replace' ),
+			);
+		}
+
+		$before = (string) $post->post_content;
+		$report = $this->engine->apply_rules( $before, 'the_content', true, $rule_ids );
+		$after  = $report['content'];
+
+		if ( $after === $before ) {
+			return array(
+				'run_id'  => '',
+				'updated' => false,
+				'message' => __( 'No changes to apply.', 'wordpress-content-find-replace' ),
+			);
+		}
+
+		$updated = wp_update_post(
+			array(
+				'ID'           => $post_id,
+				'post_content' => $after,
+			),
+			true
+		);
+
+		if ( is_wp_error( $updated ) ) {
+			return array(
+				'run_id'  => '',
+				'updated' => false,
+				'message' => $updated->get_error_message(),
+			);
+		}
+
+		$run_id   = wp_generate_uuid4();
+		$snapshot = array(
+			'run_id'      => $run_id,
+			'created_at'  => gmdate( 'c' ),
+			'scope'       => $scope,
+			'updated_ids' => array( $post_id ),
+			'entries'     => array(
+				array(
+					'post_id' => $post_id,
+					'before'  => $before,
+					'after'   => $after,
+				),
+			),
+		);
+
+		$this->store_snapshot( $snapshot );
+
+		return array(
+			'run_id'  => $run_id,
+			'updated' => true,
+			'message' => '',
+		);
+	}
+
+	/**
 	 * Roll back migration by run id.
 	 *
 	 * @param string $run_id Run ID.

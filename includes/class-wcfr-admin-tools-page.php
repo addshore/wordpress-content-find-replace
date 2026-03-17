@@ -74,6 +74,7 @@ class WCFR_Admin_Tools_Page {
 		add_action( 'admin_post_wcfr_install_wikimedia_preset', array( $this, 'handle_install_wikimedia_preset' ) );
 		add_action( 'admin_post_wcfr_migration_preview', array( $this, 'handle_migration_preview' ) );
 		add_action( 'admin_post_wcfr_migration_apply', array( $this, 'handle_migration_apply' ) );
+		add_action( 'admin_post_wcfr_migration_apply_single', array( $this, 'handle_migration_apply_single' ) );
 		add_action( 'admin_post_wcfr_migration_rollback', array( $this, 'handle_migration_rollback' ) );
 		add_action( 'admin_notices', array( $this, 'render_runtime_notices' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
@@ -197,6 +198,36 @@ class WCFR_Admin_Tools_Page {
 		);
 
 		$this->redirect_with_message( 'applied', $message );
+	}
+
+	/**
+	 * Apply migration to a single post.
+	 *
+	 * @return void
+	 */
+	public function handle_migration_apply_single(): void {
+		$this->assert_admin_action( 'wcfr_migration_apply_single' );
+
+		$post_id = isset( $_POST['wcfr_post_id'] ) ? (int) wp_unslash( $_POST['wcfr_post_id'] ) : 0;
+		if ( $post_id <= 0 ) {
+			$this->redirect_with_message( 'applied', __( 'Invalid post ID.', 'wordpress-content-find-replace' ) );
+		}
+
+		$scope  = $this->read_scope_from_request();
+		$result = $this->migrations->apply_single( $post_id, $scope );
+
+		if ( ! $result['updated'] ) {
+			$this->redirect_with_message( 'applied', (string) $result['message'] );
+		}
+
+		$this->redirect_with_message(
+			'applied',
+			sprintf(
+				/* translators: %d post ID. */
+				__( 'Applied to post #%d.', 'wordpress-content-find-replace' ),
+				$post_id
+			)
+		);
 	}
 
 	/**

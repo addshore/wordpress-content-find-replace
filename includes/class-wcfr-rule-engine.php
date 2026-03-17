@@ -187,7 +187,7 @@ class WCFR_Rule_Engine {
 				);
 			}
 
-			$match_count = preg_match_all( $pattern, $content, $unused_matches );
+			$match_count = preg_match_all( $pattern, $content, $captured_matches, PREG_OFFSET_CAPTURE );
 			if ( false === $match_count || 0 === $match_count ) {
 				return array(
 					'content' => $content,
@@ -214,6 +214,29 @@ class WCFR_Rule_Engine {
 				);
 			}
 
+			$snippets      = array();
+			$content_len   = strlen( $content );
+			foreach ( array_slice( $captured_matches[0], 0, 5 ) as $match ) {
+				$matched_text = $match[0];
+				$offset       = $match[1];
+				$matched_len  = strlen( $matched_text );
+				$ctx_start    = max( 0, $offset - 80 );
+				$ctx_end      = min( $content_len, $offset + $matched_len + 80 );
+
+				set_error_handler( 'wcfr_silence_pcre_errors' );
+				$match_replacement = preg_replace( $pattern, $replace, $matched_text );
+				restore_error_handler();
+
+				$snippets[] = array(
+					'matched'          => $matched_text,
+					'replacement'      => is_string( $match_replacement ) ? $match_replacement : '',
+					'ctx_before'       => $ctx_start < $offset ? substr( $content, $ctx_start, $offset - $ctx_start ) : '',
+					'ctx_after'        => substr( $content, $offset + $matched_len, $ctx_end - ( $offset + $matched_len ) ),
+					'truncated_before' => $ctx_start > 0,
+					'truncated_after'  => $ctx_end < $content_len,
+				);
+			}
+
 			return array(
 				'content' => $result,
 				'changes' => array(
@@ -222,6 +245,7 @@ class WCFR_Rule_Engine {
 						'pattern'     => $pattern,
 						'replacement' => $replace,
 						'occurrences' => (int) $match_count,
+						'snippets'    => $snippets,
 					),
 				),
 				'errors'  => array(),
@@ -237,23 +261,44 @@ class WCFR_Rule_Engine {
 			);
 		}
 
+		$snippets   = array();
+		$search_pos = 0;
+		$find_len   = strlen( $find );
+		$content_len = strlen( $content );
+		while ( count( $snippets ) < 5 ) {
+			$found_at = $ignore_case ? stripos( $content, $find, $search_pos ) : strpos( $content, $find, $search_pos );
+			if ( false === $found_at ) {
+				break;
+			}
+			$ctx_start  = max( 0, $found_at - 80 );
+			$ctx_end    = min( $content_len, $found_at + $find_len + 80 );
+			$snippets[] = array(
+				'matched'          => substr( $content, $found_at, $find_len ),
+				'replacement'      => $replace,
+				'ctx_before'       => $ctx_start < $found_at ? substr( $content, $ctx_start, $found_at - $ctx_start ) : '',
+				'ctx_after'        => substr( $content, $found_at + $find_len, $ctx_end - ( $found_at + $find_len ) ),
+				'truncated_before' => $ctx_start > 0,
+				'truncated_after'  => $ctx_end < $content_len,
+			);
+			$search_pos = $found_at + 1;
+		}
+
 		$updated = $ignore_case ? str_ireplace( $find, $replace, $content ) : str_replace( $find, $replace, $content );
 		if ( ! is_string( $updated ) ) {
 			$updated = $content;
 		}
 
-		$changes = array(
-			array(
-				'type'       => 'text',
-				'from'       => $find,
-				'to'         => $replace,
-				'occurrences'=> $occurrence_count,
-			),
-		);
-
 		return array(
 			'content' => $updated,
-			'changes' => $changes,
+			'changes' => array(
+				array(
+					'type'        => 'text',
+					'from'        => $find,
+					'to'          => $replace,
+					'occurrences' => $occurrence_count,
+					'snippets'    => $snippets,
+				),
+			),
 			'errors'  => array(),
 		);
 	}

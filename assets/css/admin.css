@@ -53,3 +53,149 @@
 .wcfr-preset-info.wcfr-hidden {
   display: none;
 }
+
+/* ── Preview results ──────────────────────────────────────── */
+
+.wcfr-preview-item {
+  background: #fff;
+  border: 1px solid #ccd0d4;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.wcfr-preview-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #f6f7f7;
+  border-bottom: 1px solid #dcdcde;
+  padding: 8px 12px;
+  flex-wrap: wrap;
+}
+
+.wcfr-preview-post-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.wcfr-preview-post-id {
+  color: #646970;
+  font-weight: 600;
+}
+
+.wcfr-edit-link {
+  color: #646970;
+  font-size: 12px;
+}
+
+.wcfr-post-type-badge {
+  background: #e2e4e7;
+  border-radius: 3px;
+  color: #3c434a;
+  font-size: 11px;
+  padding: 1px 5px;
+}
+
+.wcfr-apply-single-form {
+  flex-shrink: 0;
+}
+
+.wcfr-apply-single-form .button {
+  white-space: nowrap;
+}
+
+/* ── Diff display ─────────────────────────────────────────── */
+
+.wcfr-change-group {
+  padding: 8px 12px;
+  border-bottom: 1px solid #f0f0f1;
+}
+
+.wcfr-change-group:last-child {
+  border-bottom: none;
+}
+
+.wcfr-diff-context-block {
+  margin-bottom: 6px;
+}
+
+.wcfr-diff-line {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 12px;
+  padding: 3px 6px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.5;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.wcfr-diff-remove {
+  background: #fff0f0;
+  border-left: 3px solid #c00;
+}
+
+.wcfr-diff-add {
+  background: #f0fff4;
+  border-left: 3px solid #00a32a;
+}
+
+.wcfr-diff-marker {
+  font-weight: 700;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.wcfr-diff-remove .wcfr-diff-marker { color: #c00; }
+.wcfr-diff-add .wcfr-diff-marker    { color: #00a32a; }
+
+.wcfr-diff-highlight {
+  font-weight: 700;
+}
+
+.wcfr-diff-remove .wcfr-diff-highlight {
+  background: #ffc8c8;
+  text-decoration: line-through;
+}
+
+.wcfr-diff-add .wcfr-diff-highlight {
+  background: #b3ffc8;
+}
+
+.wcfr-ctx {
+  color: #50575e;
+  font-weight: 400;
+}
+
+.wcfr-ctx-ellipsis {
+  color: #999;
+  font-style: italic;
+}
+
+.wcfr-more-occurrences {
+  color: #646970;
+  font-size: 12px;
+  font-style: italic;
+  margin: 4px 0 0;
+}
+
+.wcfr-change-fallback {
+  font-size: 13px;
+  margin: 4px 0;
+}
+
+.wcfr-diff-arrow {
+  color: #646970;
+  margin: 0 4px;
+}
+
+.wcfr-occurrence-count {
+  color: #646970;
+  font-size: 12px;
+}
