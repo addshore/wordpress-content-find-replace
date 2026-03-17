@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress Content Find Replace">
+  <description>WordPress coding standards for plugin sources.</description>
+  <rule ref="WordPress" />
+  <rule ref="WordPress-Extra" />
+  <rule ref="PHPCompatibilityWP" />
+
+  <config name="testVersion" value="8.0-"/>
+  <arg name="extensions" value="php"/>
+
+  <exclude-pattern>vendor/*</exclude-pattern>
+  <exclude-pattern>tests/*</exclude-pattern>
+</ruleset>

@@ -1,0 +1,11 @@
+.wcfr-rule-card {
+  background: #fff;
+  border: 1px solid #ccd0d4;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  padding: 12px;
+}
+
+.wcfr-rule-card label {
+  margin-right: 10px;
+}

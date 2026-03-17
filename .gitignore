@@ -1,0 +1,9 @@
+.DS_Store
+Thumbs.db
+vendor/
+composer.lock
+phpunit.xml
+coverage/
+node_modules/
+build
+.phpunit.result.cache

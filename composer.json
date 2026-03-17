@@ -1,0 +1,23 @@
+{
+  "name": "addshore/wordpress-content-find-replace",
+  "description": "WordPress content find/replace plugin with Wikimedia thumbnail rewrite support",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">=8.0"
+  },
+  "require-dev": {
+    "wp-coding-standards/wpcs": "^3.1",
+    "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "phpunit/phpunit": "^9.6"
+  },
+  "scripts": {
+    "lint": "phpcs --standard=phpcs.xml.dist .",
+    "test": "phpunit -c phpunit.xml.dist"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}
