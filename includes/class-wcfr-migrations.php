@@ -46,13 +46,14 @@ class WCFR_Migrations {
 	 * @return array<string,mixed>
 	 */
 	public function preview( array $scope ): array {
-		$posts  = $this->query_posts( $scope );
-		$items  = array();
-		$errors = array();
+		$posts    = $this->query_posts( $scope );
+		$items    = array();
+		$errors   = array();
+		$rule_ids = isset( $scope['rule_ids'] ) && is_array( $scope['rule_ids'] ) ? $scope['rule_ids'] : null;
 
 		foreach ( $posts as $post ) {
 			$before = (string) $post->post_content;
-			$report = $this->engine->apply_rules( $before, 'the_content', true );
+			$report = $this->engine->apply_rules( $before, 'the_content', true, $rule_ids );
 			$after  = $report['content'];
 
 			if ( $after === $before ) {

@@ -54,12 +54,13 @@ class WCFR_Rule_Engine {
 	/**
 	 * Apply rules with report.
 	 *
-	 * @param string $content Content.
-	 * @param string $filter_name Current filter.
-	 * @param bool   $force_admin_override Force execution in admin.
+	 * @param string            $content Content.
+	 * @param string            $filter_name Current filter.
+	 * @param bool              $force_admin_override Force execution in admin.
+	 * @param array<int,string>|null $rule_ids Limit to these rule IDs (null = all).
 	 * @return array{content:string,changes:array<int,array<string,mixed>>,errors:array<int,string>}
 	 */
-	public function apply_rules( string $content, string $filter_name = 'the_content', bool $force_admin_override = false ): array {
+	public function apply_rules( string $content, string $filter_name = 'the_content', bool $force_admin_override = false, ?array $rule_ids = null ): array {
 		$settings = $this->options->get_settings();
 		if ( empty( $settings['enabled'] ) ) {
 			return array(
@@ -96,6 +97,10 @@ class WCFR_Rule_Engine {
 
 		foreach ( $rules as $rule ) {
 			if ( empty( $rule['enabled'] ) || ! is_array( $rule ) ) {
+				continue;
+			}
+
+			if ( null !== $rule_ids && ! in_array( (string) ( $rule['id'] ?? '' ), $rule_ids, true ) ) {
 				continue;
 			}
 

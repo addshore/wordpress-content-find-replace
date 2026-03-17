@@ -112,6 +112,14 @@ class WCFR_Admin_Tools_Page {
 		$post_types        = get_post_types( array( 'public' => true ), 'objects' );
 		$post_statuses     = get_post_stati( array(), 'objects' );
 
+		$has_wikimedia_preset = false;
+		foreach ( $rules as $rule ) {
+			if ( isset( $rule['strategy'] ) && 'wikimedia_thumbnail_roundup' === $rule['strategy'] ) {
+				$has_wikimedia_preset = true;
+				break;
+			}
+		}
+
 		require WCFR_PLUGIN_DIR . 'admin/views/tools-page.php';
 	}
 
@@ -275,11 +283,13 @@ class WCFR_Admin_Tools_Page {
 		$post_types    = isset( $scope['post_types'] ) && is_array( $scope['post_types'] ) ? array_map( 'sanitize_key', $scope['post_types'] ) : array( 'post', 'page' );
 		$post_statuses = isset( $scope['post_statuses'] ) && is_array( $scope['post_statuses'] ) ? array_map( 'sanitize_key', $scope['post_statuses'] ) : array( 'publish' );
 		$limit         = isset( $scope['limit'] ) ? (int) $scope['limit'] : 100;
+		$rule_ids      = isset( $scope['rule_ids'] ) && is_array( $scope['rule_ids'] ) ? array_map( 'sanitize_text_field', $scope['rule_ids'] ) : null;
 
 		return array(
 			'post_types'    => $post_types,
 			'post_statuses' => $post_statuses,
 			'limit'         => max( 1, min( 500, $limit ) ),
+			'rule_ids'      => $rule_ids,
 		);
 	}
 

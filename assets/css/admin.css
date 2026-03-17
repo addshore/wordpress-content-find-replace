@@ -4,8 +4,52 @@
   border-radius: 4px;
   margin-bottom: 16px;
   padding: 12px;
+  position: relative;
 }
 
 .wcfr-rule-card label {
   margin-right: 10px;
+}
+
+.wcfr-rule-card .wcfr-rule-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.wcfr-rule-card .wcfr-rule-header strong {
+  font-size: 13px;
+}
+
+.wcfr-preset-info {
+  background: #f0f6ff;
+  border: 1px solid #c5d9f1;
+  border-radius: 3px;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.wcfr-preset-info code {
+  font-size: 11px;
+  word-break: break-all;
+  display: block;
+  margin-top: 4px;
+  background: #e8f0fb;
+  padding: 4px 6px;
+  border-radius: 2px;
+}
+
+.wcfr-rule-fields-fr {
+  /* Shown for find/replace strategy */
+}
+
+.wcfr-rule-fields-fr.wcfr-hidden,
+.wcfr-rule-flags.wcfr-hidden {
+  display: none;
+}
+
+.wcfr-preset-info.wcfr-hidden {
+  display: none;
 }
