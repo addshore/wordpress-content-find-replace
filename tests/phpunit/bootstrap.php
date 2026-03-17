@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap placeholder.
  *
- * @package WordPressContentFindReplace
+ * @package ContentFindReplace
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

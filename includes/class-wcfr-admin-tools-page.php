@@ -2,7 +2,7 @@
 /**
  * Tools page.
  *
- * @package WordPressContentFindReplace
+ * @package ContentFindReplace
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

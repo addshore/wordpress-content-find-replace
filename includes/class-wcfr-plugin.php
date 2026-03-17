@@ -2,7 +2,7 @@
 /**
  * Main plugin orchestrator.
  *
- * @package WordPressContentFindReplace
+ * @package ContentFindReplace
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

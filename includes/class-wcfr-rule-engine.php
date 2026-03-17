@@ -2,7 +2,7 @@
 /**
  * Content rule engine.
  *
- * @package WordPressContentFindReplace
+ * @package ContentFindReplace
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

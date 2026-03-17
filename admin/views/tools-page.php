@@ -9,7 +9,7 @@
  * @var array<string,WP_Post_Type>                   $post_types
  * @var array<string,stdClass>                       $post_statuses
  *
- * @package WordPressContentFindReplace
+ * @package ContentFindReplace
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

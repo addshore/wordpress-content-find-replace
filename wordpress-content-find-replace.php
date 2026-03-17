@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name:       WordPress Content Find Replace
- * Plugin URI:        https://wordpress.org/plugins/wordpress-content-find-replace/
+ * Plugin Name:       Content Find Replace
+ * Plugin URI:        https://wordpress.org/plugins/content-find-replace/
  * Description:       Unlimited find/replace rules with a Wikimedia thumbnail rewrite preset, previewable migrations, and rollback support.
  * Version:           0.1.0
  * Requires at least: 6.0
@@ -9,10 +9,10 @@
  * Author:            Addshore
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       wordpress-content-find-replace
+ * Text Domain:       content-find-replace
  * Domain Path:       /languages
  *
- * @package WordPressContentFindReplace
+ * @package ContentFindReplace
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

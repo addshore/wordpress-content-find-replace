@@ -2,7 +2,7 @@
 /**
  * Wikimedia preset tests.
  *
- * @package WordPressContentFindReplace
+ * @package ContentFindReplace
  */
 
 use PHPUnit\Framework\TestCase;

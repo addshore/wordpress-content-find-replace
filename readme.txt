@@ -1,4 +1,4 @@
-=== WordPress Content Find Replace ===
+=== Content Find Replace ===
 Contributors: addshore
 Tags: find, replace, regex, content, migration
 Requires at least: 6.0
@@ -12,7 +12,7 @@ Unlimited content find/replace rules with regex support, Wikimedia thumbnail rew
 
 == Description ==
 
-WordPress Content Find Replace provides:
+Content Find Replace provides:
 
 * Unlimited rule-based find/replace for post content.
 * Plain text or regex matching.

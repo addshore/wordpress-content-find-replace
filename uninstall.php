@@ -2,7 +2,7 @@
 /**
  * Plugin uninstall cleanup.
  *
- * @package WordPressContentFindReplace
+ * @package ContentFindReplace
  */
 
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {

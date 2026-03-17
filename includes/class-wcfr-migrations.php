@@ -2,7 +2,7 @@
 /**
  * Migration preview/apply/rollback service.
  *
- * @package WordPressContentFindReplace
+ * @package ContentFindReplace
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

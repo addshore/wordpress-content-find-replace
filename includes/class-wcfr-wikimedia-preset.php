@@ -2,7 +2,7 @@
 /**
  * Wikimedia preset helpers.
  *
- * @package WordPressContentFindReplace
+ * @package ContentFindReplace
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
