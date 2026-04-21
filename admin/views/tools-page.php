@@ -16,7 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$message = isset( $_GET['wcfr_msg'] ) ? sanitize_text_field( (string) wp_unslash( $_GET['wcfr_msg'] ) ) : '';
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template file; variables are local to this include, not globals.
+
+$message = isset( $_GET['wcfr_msg'] ) ? sanitize_text_field( (string) wp_unslash( $_GET['wcfr_msg'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Display-only status message set by plugin's own safe redirect.
 if ( '' !== $message ) :
 	?>
 	<div class="notice notice-success is-dismissible"><p><?php echo esc_html( $message ); ?></p></div>
@@ -210,7 +212,10 @@ endif;
 		?>
 
 		<?php if ( ! empty( $preview['items'] ) && is_array( $preview['items'] ) ) : ?>
-			<p><?php printf( esc_html__( '%d post(s) will be affected.', 'wordpress-content-find-replace' ), count( $preview['items'] ) ); ?></p>
+			<?php
+		// translators: %d: number of posts that will be affected.
+		?>
+		<p><?php printf( esc_html__( '%d post(s) will be affected.', 'wordpress-content-find-replace' ), count( $preview['items'] ) ); ?></p>
 			<?php foreach ( $preview['items'] as $preview_item ) : ?>
 				<?php
 				$p_id       = (int) ( $preview_item['post_id'] ?? 0 );
@@ -286,7 +291,7 @@ endif;
 										printf(
 											/* translators: %d number of additional occurrences. */
 											esc_html__( '&hellip; and %d more occurrence(s) in this post.', 'wordpress-content-find-replace' ),
-											$remaining
+											(int) $remaining
 										);
 										?>
 									</p>

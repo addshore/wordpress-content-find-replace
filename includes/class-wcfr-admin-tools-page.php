@@ -132,7 +132,9 @@ class WCFR_Admin_Tools_Page {
 	public function handle_save_settings(): void {
 		$this->assert_admin_action( 'wcfr_save_settings' );
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce verified by assert_admin_action() above.
 		$incoming = isset( $_POST['wcfr'] ) && is_array( $_POST['wcfr'] ) ? wp_unslash( $_POST['wcfr'] ) : array();
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$rules    = isset( $_POST['wcfr_rules'] ) && is_array( $_POST['wcfr_rules'] ) ? wp_unslash( $_POST['wcfr_rules'] ) : array();
 
 		$incoming['enabled']        = ! empty( $incoming['enabled'] );
@@ -208,6 +210,7 @@ class WCFR_Admin_Tools_Page {
 	public function handle_migration_apply_single(): void {
 		$this->assert_admin_action( 'wcfr_migration_apply_single' );
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce verified by assert_admin_action() above.
 		$post_id = isset( $_POST['wcfr_post_id'] ) ? (int) wp_unslash( $_POST['wcfr_post_id'] ) : 0;
 		if ( $post_id <= 0 ) {
 			$this->redirect_with_message( 'applied', __( 'Invalid post ID.', 'wordpress-content-find-replace' ) );
@@ -238,6 +241,7 @@ class WCFR_Admin_Tools_Page {
 	public function handle_migration_rollback(): void {
 		$this->assert_admin_action( 'wcfr_migration_rollback' );
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by assert_admin_action() above.
 		$run_id = isset( $_POST['run_id'] ) ? sanitize_text_field( (string) wp_unslash( $_POST['run_id'] ) ) : '';
 		if ( '' === $run_id ) {
 			$this->redirect_with_message( 'rollback', __( 'Run ID missing.', 'wordpress-content-find-replace' ) );
@@ -309,6 +313,7 @@ class WCFR_Admin_Tools_Page {
 	 * @return array<string,mixed>
 	 */
 	private function read_scope_from_request(): array {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce verified by assert_admin_action() in the calling handler.
 		$scope = isset( $_POST['wcfr_scope'] ) && is_array( $_POST['wcfr_scope'] ) ? wp_unslash( $_POST['wcfr_scope'] ) : array();
 
 		$post_types    = isset( $scope['post_types'] ) && is_array( $scope['post_types'] ) ? array_map( 'sanitize_key', $scope['post_types'] ) : array( 'post', 'page' );
