@@ -29,6 +29,23 @@ Content Find Replace provides:
 5. Save settings.
 6. (Optional) Use the migration section to preview and apply DB rewrites.
 
+== Development (Docker Compose) ==
+
+The repository includes a local container setup in `docker-compose.yml`.
+
+1. Start services:
+`docker compose up -d db wordpress`
+2. Install WordPress (first run only):
+`docker compose run --rm wpcli core install --url=http://localhost:8080 --title='Content Find Replace Dev' --admin_user=admin --admin_password=admin --admin_email=admin@example.com --skip-email`
+3. Activate this plugin:
+`docker compose run --rm wpcli plugin activate content-find-replace/wordpress-content-find-replace.php --url=http://localhost:8080`
+4. Validate it is active and loaded:
+`docker compose run --rm wpcli plugin is-active content-find-replace/wordpress-content-find-replace.php --url=http://localhost:8080`
+`docker compose run --rm wpcli eval 'echo class_exists("WCFR_Plugin") ? "WCFR_Plugin loaded" : "WCFR_Plugin missing";' --url=http://localhost:8080`
+
+Use `http://localhost:8080` for the frontend and `http://localhost:8080/wp-admin` for admin.
+To stop containers, run `docker compose down` (or `docker compose down -v` to reset DB and WordPress data).
+
 == Frequently Asked Questions ==
 
 = Is regex required? =
