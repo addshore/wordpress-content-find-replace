@@ -29,7 +29,7 @@ class WCFR_Wikimedia_Preset {
 	public static function get_rule(): array {
 		return array(
 			'id'             => wp_generate_uuid4(),
-			'name'           => __( 'Wikimedia: Round thumbnail to next allowed size', 'wordpress-content-find-replace' ),
+			'name'           => __( 'Wikimedia: Round thumbnail to next allowed size', 'content-find-replace' ),
 			'enabled'        => true,
 			'strategy'       => 'wikimedia_thumbnail_roundup',
 			'find'           => '',

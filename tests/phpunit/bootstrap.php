@@ -16,6 +16,7 @@ if ( ! function_exists( '__' ) ) {
 	 * @param string $text Text.
 	 * @return string
 	 */
+	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- PHPUnit bootstrap shim for isolated tests.
 	function __( string $text ): string {
 		return $text;
 	}

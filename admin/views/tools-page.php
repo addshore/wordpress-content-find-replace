@@ -27,32 +27,32 @@ endif;
 ?>
 
 <div class="wrap">
-	<h1><?php esc_html_e( 'Content Find Replace', 'wordpress-content-find-replace' ); ?></h1>
+	<h1><?php esc_html_e( 'Content Find Replace', 'content-find-replace' ); ?></h1>
 
-	<p><?php esc_html_e( 'Create unlimited rules, install the Wikimedia preset, and preview/apply safe migrations with rollback.', 'wordpress-content-find-replace' ); ?></p>
+	<p><?php esc_html_e( 'Create unlimited rules, install the Wikimedia preset, and preview/apply safe migrations with rollback.', 'content-find-replace' ); ?></p>
 
-	<h2><?php esc_html_e( 'Global Settings', 'wordpress-content-find-replace' ); ?></h2>
+	<h2><?php esc_html_e( 'Global Settings', 'content-find-replace' ); ?></h2>
 	<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 		<input type="hidden" name="action" value="wcfr_save_settings" />
 		<?php wp_nonce_field( 'wcfr_save_settings' ); ?>
 
 		<table class="form-table" role="presentation">
 			<tr>
-				<th scope="row"><?php esc_html_e( 'Plugin Enabled', 'wordpress-content-find-replace' ); ?></th>
-				<td><label><input type="checkbox" name="wcfr[enabled]" value="1" <?php checked( ! empty( $settings['enabled'] ) ); ?> /> <?php esc_html_e( 'Enable runtime replacement.', 'wordpress-content-find-replace' ); ?></label></td>
+				<th scope="row"><?php esc_html_e( 'Plugin Enabled', 'content-find-replace' ); ?></th>
+				<td><label><input type="checkbox" name="wcfr[enabled]" value="1" <?php checked( ! empty( $settings['enabled'] ) ); ?> /> <?php esc_html_e( 'Enable runtime replacement.', 'content-find-replace' ); ?></label></td>
 			</tr>
 			<tr>
-				<th scope="row"><?php esc_html_e( 'Filter the_content', 'wordpress-content-find-replace' ); ?></th>
-				<td><label><input type="checkbox" name="wcfr[filter_content]" value="1" <?php checked( ! empty( $settings['filter_content'] ) ); ?> /> <?php esc_html_e( 'Apply rules to post content.', 'wordpress-content-find-replace' ); ?></label></td>
+				<th scope="row"><?php esc_html_e( 'Filter the_content', 'content-find-replace' ); ?></th>
+				<td><label><input type="checkbox" name="wcfr[filter_content]" value="1" <?php checked( ! empty( $settings['filter_content'] ) ); ?> /> <?php esc_html_e( 'Apply rules to post content.', 'content-find-replace' ); ?></label></td>
 			</tr>
 			<tr>
-				<th scope="row"><?php esc_html_e( 'Filter the_excerpt', 'wordpress-content-find-replace' ); ?></th>
-				<td><label><input type="checkbox" name="wcfr[filter_excerpt]" value="1" <?php checked( ! empty( $settings['filter_excerpt'] ) ); ?> /> <?php esc_html_e( 'Apply rules to excerpts.', 'wordpress-content-find-replace' ); ?></label></td>
+				<th scope="row"><?php esc_html_e( 'Filter the_excerpt', 'content-find-replace' ); ?></th>
+				<td><label><input type="checkbox" name="wcfr[filter_excerpt]" value="1" <?php checked( ! empty( $settings['filter_excerpt'] ) ); ?> /> <?php esc_html_e( 'Apply rules to excerpts.', 'content-find-replace' ); ?></label></td>
 			</tr>
 		</table>
 
-		<h2><?php esc_html_e( 'Rules', 'wordpress-content-find-replace' ); ?></h2>
-		<p><?php esc_html_e( 'Rules run in the listed order. The Wikimedia preset appears as a strategy rule and can be toggled like others.', 'wordpress-content-find-replace' ); ?></p>
+		<h2><?php esc_html_e( 'Rules', 'content-find-replace' ); ?></h2>
+		<p><?php esc_html_e( 'Rules run in the listed order. The Wikimedia preset appears as a strategy rule and can be toggled like others.', 'content-find-replace' ); ?></p>
 
 		<div id="wcfr-rules">
 			<?php foreach ( $rules as $index => $rule ) : ?>
@@ -64,55 +64,55 @@ endif;
 				<div class="wcfr-rule-card">
 					<input type="hidden" name="wcfr_rules[<?php echo esc_attr( (string) $row_index ); ?>][id]" value="<?php echo esc_attr( (string) ( $rule['id'] ?? '' ) ); ?>" />
 					<div class="wcfr-rule-header">
-						<strong><?php echo esc_html( (string) ( $rule['name'] ?? __( 'Rule', 'wordpress-content-find-replace' ) ) ); ?></strong>
-						<button type="button" class="button button-small wcfr-remove-rule"><?php esc_html_e( 'Remove', 'wordpress-content-find-replace' ); ?></button>
+						<strong><?php echo esc_html( (string) ( $rule['name'] ?? __( 'Rule', 'content-find-replace' ) ) ); ?></strong>
+						<button type="button" class="button button-small wcfr-remove-rule"><?php esc_html_e( 'Remove', 'content-find-replace' ); ?></button>
 					</div>
 					<p>
-						<label><?php esc_html_e( 'Name', 'wordpress-content-find-replace' ); ?><br />
+						<label><?php esc_html_e( 'Name', 'content-find-replace' ); ?><br />
 							<input type="text" class="regular-text" name="wcfr_rules[<?php echo esc_attr( (string) $row_index ); ?>][name]" value="<?php echo esc_attr( (string) ( $rule['name'] ?? '' ) ); ?>" />
 						</label>
 					</p>
 					<p>
-						<label><?php esc_html_e( 'Strategy', 'wordpress-content-find-replace' ); ?><br />
+						<label><?php esc_html_e( 'Strategy', 'content-find-replace' ); ?><br />
 							<select class="wcfr-strategy-select" name="wcfr_rules[<?php echo esc_attr( (string) $row_index ); ?>][strategy]">
-								<option value="find_replace" <?php selected( $strategy, 'find_replace' ); ?>><?php esc_html_e( 'Find/Replace', 'wordpress-content-find-replace' ); ?></option>
-								<option value="wikimedia_thumbnail_roundup" <?php selected( $strategy, 'wikimedia_thumbnail_roundup' ); ?>><?php esc_html_e( 'Wikimedia Thumbnail Roundup', 'wordpress-content-find-replace' ); ?></option>
+								<option value="find_replace" <?php selected( $strategy, 'find_replace' ); ?>><?php esc_html_e( 'Find/Replace', 'content-find-replace' ); ?></option>
+								<option value="wikimedia_thumbnail_roundup" <?php selected( $strategy, 'wikimedia_thumbnail_roundup' ); ?>><?php esc_html_e( 'Wikimedia Thumbnail Roundup', 'content-find-replace' ); ?></option>
 							</select>
 						</label>
 					</p>
 
 					<div class="wcfr-preset-info<?php echo $is_preset ? '' : ' wcfr-hidden'; ?>">
-						<strong><?php esc_html_e( 'How this rule works:', 'wordpress-content-find-replace' ); ?></strong>
-						<p><?php esc_html_e( 'Scans post content for Wikimedia thumbnail URLs and rewrites the pixel size to the next allowed size. No find/replace text is needed — the URL pattern and size ladder are built in.', 'wordpress-content-find-replace' ); ?></p>
-						<strong><?php esc_html_e( 'Matches URLs like:', 'wordpress-content-find-replace' ); ?></strong>
+						<strong><?php esc_html_e( 'How this rule works:', 'content-find-replace' ); ?></strong>
+						<p><?php esc_html_e( 'Scans post content for Wikimedia thumbnail URLs and rewrites the pixel size to the next allowed size. No find/replace text is needed — the URL pattern and size ladder are built in.', 'content-find-replace' ); ?></p>
+						<strong><?php esc_html_e( 'Matches URLs like:', 'content-find-replace' ); ?></strong>
 						<code>//upload.wikimedia.org/wikipedia/commons/thumb/a/ab/File.png/240px-File.png</code>
-						<strong><?php esc_html_e( 'Rewrites to next size from:', 'wordpress-content-find-replace' ); ?></strong>
+						<strong><?php esc_html_e( 'Rewrites to next size from:', 'content-find-replace' ); ?></strong>
 						<code>20 &rarr; 40 &rarr; 60 &rarr; 120 &rarr; 250 &rarr; 330 &rarr; 500 &rarr; 960 &rarr; 1280 &rarr; 1920 &rarr; 3840 &rarr; (full-size source file)</code>
 					</div>
 
 					<div class="wcfr-rule-fields-fr<?php echo $is_preset ? ' wcfr-hidden' : ''; ?>">
 						<p>
-							<label><?php esc_html_e( 'Find', 'wordpress-content-find-replace' ); ?><br />
+							<label><?php esc_html_e( 'Find', 'content-find-replace' ); ?><br />
 								<textarea rows="3" class="large-text" name="wcfr_rules[<?php echo esc_attr( (string) $row_index ); ?>][find]"><?php echo esc_textarea( (string) ( $rule['find'] ?? '' ) ); ?></textarea>
 							</label>
 						</p>
 						<p>
-							<label><?php esc_html_e( 'Replace', 'wordpress-content-find-replace' ); ?><br />
+							<label><?php esc_html_e( 'Replace', 'content-find-replace' ); ?><br />
 								<textarea rows="3" class="large-text" name="wcfr_rules[<?php echo esc_attr( (string) $row_index ); ?>][replace]"><?php echo esc_textarea( (string) ( $rule['replace'] ?? '' ) ); ?></textarea>
 							</label>
 						</p>
 					</div>
 
 					<p class="wcfr-rule-flags<?php echo $is_preset ? ' wcfr-hidden' : ''; ?>">
-						<label><input type="checkbox" name="wcfr_rules[<?php echo esc_attr( (string) $row_index ); ?>][use_regex]" value="1" <?php checked( ! empty( $rule['use_regex'] ) ); ?> /> <?php esc_html_e( 'Use regex', 'wordpress-content-find-replace' ); ?></label>
-						<label><input type="checkbox" name="wcfr_rules[<?php echo esc_attr( (string) $row_index ); ?>][ignore_case]" value="1" <?php checked( ! empty( $rule['ignore_case'] ) ); ?> /> <?php esc_html_e( 'Ignore case', 'wordpress-content-find-replace' ); ?></label>
+						<label><input type="checkbox" name="wcfr_rules[<?php echo esc_attr( (string) $row_index ); ?>][use_regex]" value="1" <?php checked( ! empty( $rule['use_regex'] ) ); ?> /> <?php esc_html_e( 'Use regex', 'content-find-replace' ); ?></label>
+						<label><input type="checkbox" name="wcfr_rules[<?php echo esc_attr( (string) $row_index ); ?>][ignore_case]" value="1" <?php checked( ! empty( $rule['ignore_case'] ) ); ?> /> <?php esc_html_e( 'Ignore case', 'content-find-replace' ); ?></label>
 					</p>
 					<p>
-						<label><input type="checkbox" name="wcfr_rules[<?php echo esc_attr( (string) $row_index ); ?>][enabled]" value="1" <?php checked( ! empty( $rule['enabled'] ) ); ?> /> <?php esc_html_e( 'Enabled', 'wordpress-content-find-replace' ); ?></label>
-						<label><input type="checkbox" name="wcfr_rules[<?php echo esc_attr( (string) $row_index ); ?>][apply_in_admin]" value="1" <?php checked( ! empty( $rule['apply_in_admin'] ) ); ?> /> <?php esc_html_e( 'Apply in admin', 'wordpress-content-find-replace' ); ?></label>
+						<label><input type="checkbox" name="wcfr_rules[<?php echo esc_attr( (string) $row_index ); ?>][enabled]" value="1" <?php checked( ! empty( $rule['enabled'] ) ); ?> /> <?php esc_html_e( 'Enabled', 'content-find-replace' ); ?></label>
+						<label><input type="checkbox" name="wcfr_rules[<?php echo esc_attr( (string) $row_index ); ?>][apply_in_admin]" value="1" <?php checked( ! empty( $rule['apply_in_admin'] ) ); ?> /> <?php esc_html_e( 'Apply in admin', 'content-find-replace' ); ?></label>
 					</p>
 					<p>
-						<?php esc_html_e( 'Post Types (leave empty for all):', 'wordpress-content-find-replace' ); ?><br />
+						<?php esc_html_e( 'Post Types (leave empty for all):', 'content-find-replace' ); ?><br />
 						<?php foreach ( $post_types as $post_type_name => $post_type_obj ) : ?>
 							<?php $selected_types = ( isset( $rule['post_types'] ) && is_array( $rule['post_types'] ) ) ? $rule['post_types'] : array(); ?>
 							<label style="margin-right:10px;"><input type="checkbox" name="wcfr_rules[<?php echo esc_attr( (string) $row_index ); ?>][post_types][]" value="<?php echo esc_attr( $post_type_name ); ?>" <?php checked( in_array( $post_type_name, $selected_types, true ) ); ?> /> <?php echo esc_html( $post_type_obj->labels->singular_name ?? $post_type_name ); ?></label>
@@ -123,76 +123,76 @@ endif;
 		</div>
 
 		<p>
-			<button type="button" class="button" id="wcfr-add-rule"><?php esc_html_e( 'Add Rule', 'wordpress-content-find-replace' ); ?></button>
+			<button type="button" class="button" id="wcfr-add-rule"><?php esc_html_e( 'Add Rule', 'content-find-replace' ); ?></button>
 			<?php if ( ! $has_wikimedia_preset ) : // phpcs:ignore -- $has_wikimedia_preset set in render_page() ?>
-				<button type="button" class="button wcfr-add-wikimedia-preset" style="margin-left:8px;"><?php esc_html_e( 'Add Wikimedia Preset Rule', 'wordpress-content-find-replace' ); ?></button>
+				<button type="button" class="button wcfr-add-wikimedia-preset" style="margin-left:8px;"><?php esc_html_e( 'Add Wikimedia Preset Rule', 'content-find-replace' ); ?></button>
 			<?php else : ?>
-				<span class="description" style="margin-left:12px;"><?php esc_html_e( 'Wikimedia Thumbnail Roundup rule is already in the list above.', 'wordpress-content-find-replace' ); ?></span>
+				<span class="description" style="margin-left:12px;"><?php esc_html_e( 'Wikimedia Thumbnail Roundup rule is already in the list above.', 'content-find-replace' ); ?></span>
 			<?php endif; ?>
 		</p>
 
-		<?php submit_button( __( 'Save Settings', 'wordpress-content-find-replace' ) ); ?>
+		<?php submit_button( __( 'Save Settings', 'content-find-replace' ) ); ?>
 	</form>
 
 	<hr />
 
-	<h2><?php esc_html_e( 'Database Migration', 'wordpress-content-find-replace' ); ?></h2>
-	<p><?php esc_html_e( 'Preview changes before applying to the database. Rollback is available per run.', 'wordpress-content-find-replace' ); ?></p>
+	<h2><?php esc_html_e( 'Database Migration', 'content-find-replace' ); ?></h2>
+	<p><?php esc_html_e( 'Preview changes before applying to the database. Rollback is available per run.', 'content-find-replace' ); ?></p>
 
 	<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" id="wcfr-migration-form">
 		<input type="hidden" name="action" value="wcfr_migration_preview" />
 		<?php wp_nonce_field( 'wcfr_migration_preview' ); ?>
 
-		<h3><?php esc_html_e( 'Rules to Apply', 'wordpress-content-find-replace' ); ?></h3>
+		<h3><?php esc_html_e( 'Rules to Apply', 'content-find-replace' ); ?></h3>
 		<?php if ( ! empty( $rules ) ) : ?>
-			<p class="description"><?php esc_html_e( 'Uncheck any rules you want to exclude from this migration run.', 'wordpress-content-find-replace' ); ?></p>
+			<p class="description"><?php esc_html_e( 'Uncheck any rules you want to exclude from this migration run.', 'content-find-replace' ); ?></p>
 			<?php foreach ( $rules as $rule ) : ?>
 				<?php $rule_id = (string) ( $rule['id'] ?? '' ); ?>
 				<label style="display:block;margin-bottom:6px;">
 					<input type="checkbox" name="wcfr_scope[rule_ids][]" value="<?php echo esc_attr( $rule_id ); ?>" checked="checked" />
-					<?php echo esc_html( ( $rule['name'] ?? __( 'Unnamed rule', 'wordpress-content-find-replace' ) ) . ' (' . ( $rule['strategy'] ?? 'find_replace' ) . ( empty( $rule['enabled'] ) ? ' — disabled' : '' ) . ')' ); ?>
+					<?php echo esc_html( ( $rule['name'] ?? __( 'Unnamed rule', 'content-find-replace' ) ) . ' (' . ( $rule['strategy'] ?? 'find_replace' ) . ( empty( $rule['enabled'] ) ? ' — disabled' : '' ) . ')' ); ?>
 				</label>
 			<?php endforeach; ?>
 		<?php else : ?>
-			<p class="description"><?php esc_html_e( 'No rules configured yet. Add rules above first.', 'wordpress-content-find-replace' ); ?></p>
+			<p class="description"><?php esc_html_e( 'No rules configured yet. Add rules above first.', 'content-find-replace' ); ?></p>
 		<?php endif; ?>
 
-		<h3><?php esc_html_e( 'Scope', 'wordpress-content-find-replace' ); ?></h3>
+		<h3><?php esc_html_e( 'Scope', 'content-find-replace' ); ?></h3>
 		<p>
-			<label><?php esc_html_e( 'Limit posts scanned', 'wordpress-content-find-replace' ); ?>
+			<label><?php esc_html_e( 'Limit posts scanned', 'content-find-replace' ); ?>
 				<input type="number" min="1" max="500" name="wcfr_scope[limit]" value="100" />
 			</label>
 		</p>
 		<p>
-			<?php esc_html_e( 'Post types:', 'wordpress-content-find-replace' ); ?><br />
+			<?php esc_html_e( 'Post types:', 'content-find-replace' ); ?><br />
 			<?php foreach ( $post_types as $post_type_name => $post_type_obj ) : ?>
 				<label style="margin-right:10px;"><input type="checkbox" name="wcfr_scope[post_types][]" value="<?php echo esc_attr( $post_type_name ); ?>" checked="checked" /> <?php echo esc_html( $post_type_obj->labels->singular_name ?? $post_type_name ); ?></label>
 			<?php endforeach; ?>
 		</p>
 		<p>
-			<?php esc_html_e( 'Post statuses:', 'wordpress-content-find-replace' ); ?><br />
+			<?php esc_html_e( 'Post statuses:', 'content-find-replace' ); ?><br />
 			<?php foreach ( $post_statuses as $status_name => $status_obj ) : ?>
 				<label style="margin-right:10px;"><input type="checkbox" name="wcfr_scope[post_statuses][]" value="<?php echo esc_attr( (string) $status_name ); ?>" <?php checked( in_array( (string) $status_name, array( 'publish' ), true ) ); ?> /> <?php echo esc_html( $status_obj->label ?? (string) $status_name ); ?></label>
 			<?php endforeach; ?>
 		</p>
-		<?php submit_button( __( 'Generate Preview', 'wordpress-content-find-replace' ), 'secondary', 'submit', false ); ?>
+		<?php submit_button( __( 'Generate Preview', 'content-find-replace' ), 'secondary', 'submit', false ); ?>
 	</form>
 
 	<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-top:8px;" id="wcfr-migration-apply-form">
 		<input type="hidden" name="action" value="wcfr_migration_apply" />
 		<?php wp_nonce_field( 'wcfr_migration_apply' ); ?>
-		<p class="description"><?php esc_html_e( 'The Apply button will use the same rule selection and scope entered in the preview form above.', 'wordpress-content-find-replace' ); ?></p>
+		<p class="description"><?php esc_html_e( 'The Apply button will use the same rule selection and scope entered in the preview form above.', 'content-find-replace' ); ?></p>
 		<div id="wcfr-apply-scope-mirror"></div>
-		<?php submit_button( __( 'Apply Migration', 'wordpress-content-find-replace' ), 'primary', 'submit', false, array( 'onclick' => "return wcfrMirrorScopeAndConfirm(this);" ) ); ?>
+		<?php submit_button( __( 'Apply Migration', 'content-find-replace' ), 'primary', 'submit', false, array( 'onclick' => "return wcfrMirrorScopeAndConfirm(this);" ) ); ?>
 	</form>
 
 	<?php if ( is_array( $preview ) ) : ?>
-		<h3><?php esc_html_e( 'Latest Preview Results', 'wordpress-content-find-replace' ); ?></h3>
+		<h3><?php esc_html_e( 'Latest Preview Results', 'content-find-replace' ); ?></h3>
 		<p class="description">
 			<?php
 			printf(
 				/* translators: %s: ISO8601 date string. */
-				esc_html__( 'Generated at %s', 'wordpress-content-find-replace' ),
+				esc_html__( 'Generated at %s', 'content-find-replace' ),
 				esc_html( (string) ( $preview['generated_at'] ?? '' ) )
 			);
 			?>
@@ -212,10 +212,12 @@ endif;
 		?>
 
 		<?php if ( ! empty( $preview['items'] ) && is_array( $preview['items'] ) ) : ?>
+		<p>
 			<?php
-		// translators: %d: number of posts that will be affected.
-		?>
-		<p><?php printf( esc_html__( '%d post(s) will be affected.', 'wordpress-content-find-replace' ), count( $preview['items'] ) ); ?></p>
+			/* translators: %d: number of posts that will be affected. */
+			printf( esc_html__( '%d post(s) will be affected.', 'content-find-replace' ), count( $preview['items'] ) );
+			?>
+		</p>
 			<?php foreach ( $preview['items'] as $preview_item ) : ?>
 				<?php
 				$p_id       = (int) ( $preview_item['post_id'] ?? 0 );
@@ -230,12 +232,12 @@ endif;
 						<span class="wcfr-preview-post-meta">
 							<span class="wcfr-preview-post-id">#<?php echo esc_html( (string) $p_id ); ?></span>
 							<?php if ( $p_view_url ) : ?>
-								<a href="<?php echo esc_url( $p_view_url ); ?>" target="_blank" rel="noopener"><?php echo esc_html( $p_title ?: __( '(no title)', 'wordpress-content-find-replace' ) ); ?></a>
+								<a href="<?php echo esc_url( $p_view_url ); ?>" target="_blank" rel="noopener"><?php echo esc_html( $p_title ?: __( '(no title)', 'content-find-replace' ) ); ?></a>
 							<?php else : ?>
-								<?php echo esc_html( $p_title ?: __( '(no title)', 'wordpress-content-find-replace' ) ); ?>
+								<?php echo esc_html( $p_title ?: __( '(no title)', 'content-find-replace' ) ); ?>
 							<?php endif; ?>
 							<?php if ( $p_edit_url ) : ?>
-								<a href="<?php echo esc_url( $p_edit_url ); ?>" class="wcfr-edit-link"><?php esc_html_e( '(edit)', 'wordpress-content-find-replace' ); ?></a>
+								<a href="<?php echo esc_url( $p_edit_url ); ?>" class="wcfr-edit-link"><?php esc_html_e( '(edit)', 'content-find-replace' ); ?></a>
 							<?php endif; ?>
 							<span class="wcfr-post-type-badge"><?php echo esc_html( $p_type ); ?></span>
 						</span>
@@ -254,7 +256,7 @@ endif;
 								<input type="hidden" name="wcfr_scope[post_statuses][]" value="<?php echo esc_attr( (string) $ps ); ?>" />
 							<?php endforeach; ?>
 							<?php wp_nonce_field( 'wcfr_migration_apply_single' ); ?>
-							<?php submit_button( __( 'Apply to this post', 'wordpress-content-find-replace' ), 'small', 'submit', false, array( 'onclick' => "return confirm('Apply changes to this post now?');" ) ); ?>
+							<?php submit_button( __( 'Apply to this post', 'content-find-replace' ), 'small', 'submit', false, array( 'onclick' => "return confirm('Apply changes to this post now?');" ) ); ?>
 						</form>
 					</div>
 
@@ -290,7 +292,7 @@ endif;
 										<?php
 										printf(
 											/* translators: %d number of additional occurrences. */
-											esc_html__( '&hellip; and %d more occurrence(s) in this post.', 'wordpress-content-find-replace' ),
+											esc_html__( '&hellip; and %d more occurrence(s) in this post.', 'content-find-replace' ),
 											(int) $remaining
 										);
 										?>
@@ -309,14 +311,14 @@ endif;
 				</div>
 			<?php endforeach; ?>
 		<?php else : ?>
-			<p><?php esc_html_e( 'No rewrite candidates found.', 'wordpress-content-find-replace' ); ?></p>
+			<p><?php esc_html_e( 'No rewrite candidates found.', 'content-find-replace' ); ?></p>
 		<?php endif; ?>
 	<?php endif; ?>
 
-	<h3><?php esc_html_e( 'Available Rollbacks', 'wordpress-content-find-replace' ); ?></h3>
+	<h3><?php esc_html_e( 'Available Rollbacks', 'content-find-replace' ); ?></h3>
 	<?php if ( ! empty( $runs ) ) : ?>
 		<table class="widefat striped">
-			<thead><tr><th><?php esc_html_e( 'Run ID', 'wordpress-content-find-replace' ); ?></th><th><?php esc_html_e( 'Created', 'wordpress-content-find-replace' ); ?></th><th><?php esc_html_e( 'Updated IDs', 'wordpress-content-find-replace' ); ?></th><th><?php esc_html_e( 'Action', 'wordpress-content-find-replace' ); ?></th></tr></thead>
+			<thead><tr><th><?php esc_html_e( 'Run ID', 'content-find-replace' ); ?></th><th><?php esc_html_e( 'Created', 'content-find-replace' ); ?></th><th><?php esc_html_e( 'Updated IDs', 'content-find-replace' ); ?></th><th><?php esc_html_e( 'Action', 'content-find-replace' ); ?></th></tr></thead>
 			<tbody>
 				<?php foreach ( $runs as $run_id => $run ) : ?>
 					<tr>
@@ -328,7 +330,7 @@ endif;
 								<input type="hidden" name="action" value="wcfr_migration_rollback" />
 								<input type="hidden" name="run_id" value="<?php echo esc_attr( (string) $run_id ); ?>" />
 								<?php wp_nonce_field( 'wcfr_migration_rollback' ); ?>
-								<?php submit_button( __( 'Rollback', 'wordpress-content-find-replace' ), 'delete', 'submit', false, array( 'onclick' => "return confirm('Rollback this migration run?');" ) ); ?>
+								<?php submit_button( __( 'Rollback', 'content-find-replace' ), 'delete', 'submit', false, array( 'onclick' => "return confirm('Rollback this migration run?');" ) ); ?>
 							</form>
 						</td>
 					</tr>
@@ -336,6 +338,6 @@ endif;
 			</tbody>
 		</table>
 	<?php else : ?>
-		<p><?php esc_html_e( 'No rollback snapshots yet.', 'wordpress-content-find-replace' ); ?></p>
+		<p><?php esc_html_e( 'No rollback snapshots yet.', 'content-find-replace' ); ?></p>
 	<?php endif; ?>
 </div>

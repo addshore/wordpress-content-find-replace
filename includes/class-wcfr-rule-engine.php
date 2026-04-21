@@ -160,7 +160,7 @@ class WCFR_Rule_Engine {
 		$replace     = isset( $rule['replace'] ) ? (string) $rule['replace'] : '';
 		$ignore_case = ! empty( $rule['ignore_case'] );
 		$use_regex   = ! empty( $rule['use_regex'] );
-		$rule_name   = isset( $rule['name'] ) ? (string) $rule['name'] : __( 'Unnamed rule', 'wordpress-content-find-replace' );
+		$rule_name   = isset( $rule['name'] ) ? (string) $rule['name'] : __( 'Unnamed rule', 'content-find-replace' );
 
 		if ( '' === $find ) {
 			return array(
@@ -180,7 +180,7 @@ class WCFR_Rule_Engine {
 					'errors'  => array(
 						sprintf(
 							/* translators: %s: rule name. */
-							__( 'Regex rule skipped due to invalid pattern: %s', 'wordpress-content-find-replace' ),
+							__( 'Regex rule skipped due to invalid pattern: %s', 'content-find-replace' ),
 							$rule_name
 						),
 					),
@@ -196,9 +196,7 @@ class WCFR_Rule_Engine {
 				);
 			}
 
-			set_error_handler( 'wcfr_silence_pcre_errors' );
 			$result = preg_replace( $pattern, $replace, $content );
-			restore_error_handler();
 
 			if ( ! is_string( $result ) ) {
 				return array(
@@ -207,7 +205,7 @@ class WCFR_Rule_Engine {
 					'errors'  => array(
 						sprintf(
 							/* translators: %s: rule name. */
-							__( 'Regex execution failed for rule: %s', 'wordpress-content-find-replace' ),
+							__( 'Regex execution failed for rule: %s', 'content-find-replace' ),
 							$rule_name
 						),
 					),
@@ -223,9 +221,7 @@ class WCFR_Rule_Engine {
 				$ctx_start    = max( 0, $offset - 80 );
 				$ctx_end      = min( $content_len, $offset + $matched_len + 80 );
 
-				set_error_handler( 'wcfr_silence_pcre_errors' );
 				$match_replacement = preg_replace( $pattern, $replace, $matched_text );
-				restore_error_handler();
 
 				$snippets[] = array(
 					'matched'          => $matched_text,
@@ -314,21 +310,8 @@ class WCFR_Rule_Engine {
 			return false;
 		}
 
-		set_error_handler( 'wcfr_silence_pcre_errors' );
 		$result = preg_match( $pattern, '' );
-		restore_error_handler();
 
 		return false !== $result;
-	}
-}
-
-if ( ! function_exists( 'wcfr_silence_pcre_errors' ) ) {
-	/**
-	 * Silence expected PCRE warnings.
-	 *
-	 * @return bool
-	 */
-	function wcfr_silence_pcre_errors(): bool {
-		return true;
 	}
 }

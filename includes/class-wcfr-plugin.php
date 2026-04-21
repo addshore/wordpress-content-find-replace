@@ -71,22 +71,12 @@ class WCFR_Plugin {
 		$this->migrations = new WCFR_Migrations( $this->options, $this->engine );
 		$this->admin_page = new WCFR_Admin_Tools_Page( $this->options, $this->engine, $this->migrations );
 
-		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 		add_action( 'admin_init', array( $this->options, 'register_settings' ) );
 		add_action( 'admin_init', array( $this->admin_page, 'register_actions' ) );
 		add_action( 'admin_menu', array( $this->admin_page, 'register_menu' ) );
 
 		add_filter( 'the_content', array( $this, 'filter_content' ), 20 );
 		add_filter( 'the_excerpt', array( $this, 'filter_excerpt' ), 20 );
-	}
-
-	/**
-	 * Load text domain.
-	 *
-	 * @return void
-	 */
-	public function load_textdomain(): void {
-		load_plugin_textdomain( 'wordpress-content-find-replace', false, dirname( plugin_basename( WCFR_PLUGIN_FILE ) ) . '/languages' );
 	}
 
 	/**
