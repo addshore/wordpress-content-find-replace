@@ -57,9 +57,9 @@ endif;
 		<div id="wcfr-rules">
 			<?php foreach ( $rules as $index => $rule ) : ?>
 				<?php
-				$row_index     = (int) $index;
-				$strategy      = (string) ( $rule['strategy'] ?? 'find_replace' );
-				$is_preset     = 'wikimedia_thumbnail_roundup' === $strategy;
+				$row_index = (int) $index;
+				$strategy  = (string) ( $rule['strategy'] ?? 'find_replace' );
+				$is_preset = 'wikimedia_thumbnail_roundup' === $strategy;
 				?>
 				<div class="wcfr-rule-card">
 					<input type="hidden" name="wcfr_rules[<?php echo esc_attr( (string) $row_index ); ?>][id]" value="<?php echo esc_attr( (string) ( $rule['id'] ?? '' ) ); ?>" />
@@ -183,7 +183,7 @@ endif;
 		<?php wp_nonce_field( 'wcfr_migration_apply' ); ?>
 		<p class="description"><?php esc_html_e( 'The Apply button will use the same rule selection and scope entered in the preview form above.', 'content-find-replace' ); ?></p>
 		<div id="wcfr-apply-scope-mirror"></div>
-		<?php submit_button( __( 'Apply Migration', 'content-find-replace' ), 'primary', 'submit', false, array( 'onclick' => "return wcfrMirrorScopeAndConfirm(this);" ) ); ?>
+		<?php submit_button( __( 'Apply Migration', 'content-find-replace' ), 'primary', 'submit', false, array( 'onclick' => 'return wcfrMirrorScopeAndConfirm(this);' ) ); ?>
 	</form>
 
 	<?php if ( is_array( $preview ) ) : ?>
@@ -232,9 +232,9 @@ endif;
 						<span class="wcfr-preview-post-meta">
 							<span class="wcfr-preview-post-id">#<?php echo esc_html( (string) $p_id ); ?></span>
 							<?php if ( $p_view_url ) : ?>
-								<a href="<?php echo esc_url( $p_view_url ); ?>" target="_blank" rel="noopener"><?php echo esc_html( $p_title ?: __( '(no title)', 'content-find-replace' ) ); ?></a>
+								<a href="<?php echo esc_url( $p_view_url ); ?>" target="_blank" rel="noopener"><?php echo esc_html( '' !== $p_title ? $p_title : __( '(no title)', 'content-find-replace' ) ); ?></a>
 							<?php else : ?>
-								<?php echo esc_html( $p_title ?: __( '(no title)', 'content-find-replace' ) ); ?>
+								<?php echo esc_html( '' !== $p_title ? $p_title : __( '(no title)', 'content-find-replace' ) ); ?>
 							<?php endif; ?>
 							<?php if ( $p_edit_url ) : ?>
 								<a href="<?php echo esc_url( $p_edit_url ); ?>" class="wcfr-edit-link"><?php esc_html_e( '(edit)', 'content-find-replace' ); ?></a>
@@ -270,22 +270,34 @@ endif;
 									<div class="wcfr-diff-context-block">
 										<div class="wcfr-diff-line wcfr-diff-remove">
 											<span class="wcfr-diff-marker">-</span>
-											<?php if ( ! empty( $snippet['truncated_before'] ) ) : ?><span class="wcfr-ctx-ellipsis">&hellip;</span><?php endif; ?>
+											<?php
+											if ( ! empty( $snippet['truncated_before'] ) ) :
+												?>
+												<span class="wcfr-ctx-ellipsis">&hellip;</span><?php endif; ?>
 											<span class="wcfr-ctx"><?php echo esc_html( (string) ( $snippet['ctx_before'] ?? '' ) ); ?></span><span class="wcfr-diff-highlight"><?php echo esc_html( (string) ( $snippet['matched'] ?? '' ) ); ?></span><span class="wcfr-ctx"><?php echo esc_html( (string) ( $snippet['ctx_after'] ?? '' ) ); ?></span>
-											<?php if ( ! empty( $snippet['truncated_after'] ) ) : ?><span class="wcfr-ctx-ellipsis">&hellip;</span><?php endif; ?>
+											<?php
+											if ( ! empty( $snippet['truncated_after'] ) ) :
+												?>
+												<span class="wcfr-ctx-ellipsis">&hellip;</span><?php endif; ?>
 										</div>
 										<div class="wcfr-diff-line wcfr-diff-add">
 											<span class="wcfr-diff-marker">+</span>
-											<?php if ( ! empty( $snippet['truncated_before'] ) ) : ?><span class="wcfr-ctx-ellipsis">&hellip;</span><?php endif; ?>
+											<?php
+											if ( ! empty( $snippet['truncated_before'] ) ) :
+												?>
+												<span class="wcfr-ctx-ellipsis">&hellip;</span><?php endif; ?>
 											<span class="wcfr-ctx"><?php echo esc_html( (string) ( $snippet['ctx_before'] ?? '' ) ); ?></span><span class="wcfr-diff-highlight"><?php echo esc_html( (string) ( $snippet['replacement'] ?? '' ) ); ?></span><span class="wcfr-ctx"><?php echo esc_html( (string) ( $snippet['ctx_after'] ?? '' ) ); ?></span>
-											<?php if ( ! empty( $snippet['truncated_after'] ) ) : ?><span class="wcfr-ctx-ellipsis">&hellip;</span><?php endif; ?>
+											<?php
+											if ( ! empty( $snippet['truncated_after'] ) ) :
+												?>
+												<span class="wcfr-ctx-ellipsis">&hellip;</span><?php endif; ?>
 										</div>
 									</div>
 								<?php endforeach; ?>
 								<?php
-								$shown      = count( $change['snippets'] );
-								$total      = (int) ( $change['occurrences'] ?? $shown );
-								$remaining  = $total - $shown;
+								$shown     = count( $change['snippets'] );
+								$total     = (int) ( $change['occurrences'] ?? $shown );
+								$remaining = $total - $shown;
 								if ( $remaining > 0 ) :
 									?>
 									<p class="wcfr-more-occurrences">

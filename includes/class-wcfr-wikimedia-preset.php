@@ -44,7 +44,7 @@ class WCFR_Wikimedia_Preset {
 	/**
 	 * Apply Wikimedia URL rewrites.
 	 *
-	 * @param string $content Content.
+	 * @param string                          $content Content.
 	 * @param array<int,array<string,string>> $changes Change report accumulator.
 	 * @return string
 	 */

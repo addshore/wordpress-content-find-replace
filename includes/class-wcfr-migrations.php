@@ -61,14 +61,14 @@ class WCFR_Migrations {
 			}
 
 			$items[] = array(
-				'post_id'       => (int) $post->ID,
-				'post_type'     => (string) $post->post_type,
-				'post_title'    => (string) $post->post_title,
-				'before'        => $before,
-				'after'         => $after,
-				'before_snippet'=> wp_html_excerpt( wp_strip_all_tags( $before ), 240, '…' ),
-				'after_snippet' => wp_html_excerpt( wp_strip_all_tags( $after ), 240, '…' ),
-				'changes'       => $report['changes'],
+				'post_id'        => (int) $post->ID,
+				'post_type'      => (string) $post->post_type,
+				'post_title'     => (string) $post->post_title,
+				'before'         => $before,
+				'after'          => $after,
+				'before_snippet' => wp_html_excerpt( wp_strip_all_tags( $before ), 240, '…' ),
+				'after_snippet'  => wp_html_excerpt( wp_strip_all_tags( $after ), 240, '…' ),
+				'changes'        => $report['changes'],
 			);
 
 			if ( ! empty( $report['errors'] ) ) {
@@ -285,7 +285,7 @@ class WCFR_Migrations {
 	 * @return void
 	 */
 	private function store_snapshot( array $snapshot ): void {
-		$runs                       = $this->get_runs();
+		$runs                        = $this->get_runs();
 		$runs[ $snapshot['run_id'] ] = $snapshot;
 
 		if ( count( $runs ) > 20 ) {

@@ -135,7 +135,7 @@ class WCFR_Admin_Tools_Page {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce verified by assert_admin_action() above.
 		$incoming = isset( $_POST['wcfr'] ) && is_array( $_POST['wcfr'] ) ? wp_unslash( $_POST['wcfr'] ) : array();
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		$rules    = isset( $_POST['wcfr_rules'] ) && is_array( $_POST['wcfr_rules'] ) ? wp_unslash( $_POST['wcfr_rules'] ) : array();
+		$rules = isset( $_POST['wcfr_rules'] ) && is_array( $_POST['wcfr_rules'] ) ? wp_unslash( $_POST['wcfr_rules'] ) : array();
 
 		$incoming['enabled']        = ! empty( $incoming['enabled'] );
 		$incoming['filter_content'] = ! empty( $incoming['filter_content'] );
@@ -248,11 +248,14 @@ class WCFR_Admin_Tools_Page {
 		}
 
 		$result = $this->migrations->rollback( $run_id );
-		$this->redirect_with_message( 'rollback', sprintf(
+		$this->redirect_with_message(
+			'rollback',
+			sprintf(
 			/* translators: %d number of posts restored. */
-			__( 'Rollback restored %d posts.', 'content-find-replace' ),
-			(int) $result['restored_count']
-		) );
+				__( 'Rollback restored %d posts.', 'content-find-replace' ),
+				(int) $result['restored_count']
+			)
+		);
 	}
 
 	/**
@@ -353,9 +356,9 @@ class WCFR_Admin_Tools_Page {
 	private function redirect_with_message( string $code, string $message ): void {
 		$target = add_query_arg(
 			array(
-				'page'     => 'wcfr-tools',
-				'wcfr_msg' => $message,
-				'wcfr_code'=> $code,
+				'page'      => 'wcfr-tools',
+				'wcfr_msg'  => $message,
+				'wcfr_code' => $code,
 			),
 			admin_url( 'tools.php' )
 		);

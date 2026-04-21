@@ -45,7 +45,7 @@ class WCFR_Rule_Engine {
 	 * @return string
 	 */
 	public function filter( string $content, string $filter_name ): string {
-		$result = $this->apply_rules( $content, $filter_name, false );
+		$result       = $this->apply_rules( $content, $filter_name, false );
 		$this->errors = $result['errors'];
 
 		return $result['content'];
@@ -54,9 +54,9 @@ class WCFR_Rule_Engine {
 	/**
 	 * Apply rules with report.
 	 *
-	 * @param string            $content Content.
-	 * @param string            $filter_name Current filter.
-	 * @param bool              $force_admin_override Force execution in admin.
+	 * @param string                 $content Content.
+	 * @param string                 $filter_name Current filter.
+	 * @param bool                   $force_admin_override Force execution in admin.
 	 * @param array<int,string>|null $rule_ids Limit to these rule IDs (null = all).
 	 * @return array{content:string,changes:array<int,array<string,mixed>>,errors:array<int,string>}
 	 */
@@ -212,8 +212,8 @@ class WCFR_Rule_Engine {
 				);
 			}
 
-			$snippets      = array();
-			$content_len   = strlen( $content );
+			$snippets    = array();
+			$content_len = strlen( $content );
 			foreach ( array_slice( $captured_matches[0], 0, 5 ) as $match ) {
 				$matched_text = $match[0];
 				$offset       = $match[1];
@@ -257,11 +257,13 @@ class WCFR_Rule_Engine {
 			);
 		}
 
-		$snippets   = array();
-		$search_pos = 0;
-		$find_len   = strlen( $find );
-		$content_len = strlen( $content );
-		while ( count( $snippets ) < 5 ) {
+		$snippets      = array();
+		$search_pos    = 0;
+		$find_len      = strlen( $find );
+		$content_len   = strlen( $content );
+		$snippet_max   = 5;
+		$snippet_count = 0;
+		while ( $snippet_count < $snippet_max ) {
 			$found_at = $ignore_case ? stripos( $content, $find, $search_pos ) : strpos( $content, $find, $search_pos );
 			if ( false === $found_at ) {
 				break;
@@ -276,6 +278,7 @@ class WCFR_Rule_Engine {
 				'truncated_before' => $ctx_start > 0,
 				'truncated_after'  => $ctx_end < $content_len,
 			);
+			++$snippet_count;
 			$search_pos = $found_at + 1;
 		}
 
