@@ -1,0 +1,30 @@
+name: Build Plugin ZIP
+
+'on':
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-plugin-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+
+      - name: Build plugin ZIP
+        run: composer build
+
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wordpress-content-find-replace-zip-${{ github.sha }}
+          path: build/wordpress-content-find-replace.zip
+          if-no-files-found: error
+          retention-days: 30
