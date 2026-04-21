@@ -15,6 +15,10 @@ jobs:
         uses: wordpress/plugin-check-action@v1
         with:
           slug: content-find-replace
+          exclude-files: |
+            .gitignore
+            phpcs.xml.dist
+            phpunit.xml.dist
           exclude-directories: |
             .git
             .github

@@ -17,7 +17,8 @@
     "build": [
       "rm -rf build/wordpress-content-find-replace",
       "mkdir -p build/wordpress-content-find-replace",
-      "rsync -a ./ build/wordpress-content-find-replace/ --exclude '.git' --exclude '.github' --exclude 'build' --exclude 'tests' --exclude 'vendor' --exclude 'node_modules' --exclude '.DS_Store' --exclude '.phpunit.result.cache' --exclude 'composer.lock' --exclude 'phpcs.xml.dist' --exclude 'phpunit.xml.dist'",
+      "rm -f build/wordpress-content-find-replace.zip",
+      "rsync -a ./ build/wordpress-content-find-replace/ --exclude '.git' --exclude '.github' --exclude '.gitignore' --exclude 'build' --exclude 'tests' --exclude 'vendor' --exclude 'node_modules' --exclude '.DS_Store' --exclude '.phpunit.result.cache' --exclude 'composer.lock' --exclude 'phpcs.xml.dist' --exclude 'phpunit.xml.dist'",
       "cd build && zip -r wordpress-content-find-replace.zip wordpress-content-find-replace && rm -rf wordpress-content-find-replace"
     ]
   },
