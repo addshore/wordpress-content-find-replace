@@ -56,8 +56,8 @@ class WCFR_Admin_Tools_Page {
 	public function register_menu(): void {
 		add_submenu_page(
 			'tools.php',
-			__( 'Content Find Replace', 'content-find-replace' ),
-			__( 'Content Find Replace', 'content-find-replace' ),
+			__( 'All the Content Changes', 'all-the-content-changes' ),
+			__( 'All the Content Changes', 'all-the-content-changes' ),
 			'manage_options',
 			'wcfr-tools',
 			array( $this, 'render_page' )
@@ -102,7 +102,7 @@ class WCFR_Admin_Tools_Page {
 	 */
 	public function render_page(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You are not allowed to access this page.', 'content-find-replace' ) );
+			wp_die( esc_html__( 'You are not allowed to access this page.', 'all-the-content-changes' ) );
 		}
 
 		$settings          = $this->options->get_settings();
@@ -144,7 +144,7 @@ class WCFR_Admin_Tools_Page {
 
 		$this->options->save_settings( $incoming );
 
-		$this->redirect_with_message( 'saved', __( 'Settings saved.', 'content-find-replace' ) );
+		$this->redirect_with_message( 'saved', __( 'Settings saved.', 'all-the-content-changes' ) );
 	}
 
 	/**
@@ -163,7 +163,7 @@ class WCFR_Admin_Tools_Page {
 		$settings['rules'] = $rules;
 		$this->options->save_settings( $settings );
 
-		$this->redirect_with_message( 'saved', __( 'Wikimedia preset installed.', 'content-find-replace' ) );
+		$this->redirect_with_message( 'saved', __( 'Wikimedia preset installed.', 'all-the-content-changes' ) );
 	}
 
 	/**
@@ -178,7 +178,7 @@ class WCFR_Admin_Tools_Page {
 		$preview = $this->migrations->preview( $scope );
 		set_transient( $this->preview_transient_key(), $preview, HOUR_IN_SECONDS );
 
-		$this->redirect_with_message( 'preview', __( 'Preview generated.', 'content-find-replace' ) );
+		$this->redirect_with_message( 'preview', __( 'Preview generated.', 'all-the-content-changes' ) );
 	}
 
 	/**
@@ -194,7 +194,7 @@ class WCFR_Admin_Tools_Page {
 
 		$message = sprintf(
 			/* translators: 1: updated count, 2: migration id. */
-			__( 'Migration applied to %1$d posts. Run ID: %2$s', 'content-find-replace' ),
+			__( 'Migration applied to %1$d posts. Run ID: %2$s', 'all-the-content-changes' ),
 			(int) $result['updated_count'],
 			esc_html( (string) $result['run_id'] )
 		);
@@ -213,7 +213,7 @@ class WCFR_Admin_Tools_Page {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce verified by assert_admin_action() above.
 		$post_id = isset( $_POST['wcfr_post_id'] ) ? (int) wp_unslash( $_POST['wcfr_post_id'] ) : 0;
 		if ( $post_id <= 0 ) {
-			$this->redirect_with_message( 'applied', __( 'Invalid post ID.', 'content-find-replace' ) );
+			$this->redirect_with_message( 'applied', __( 'Invalid post ID.', 'all-the-content-changes' ) );
 		}
 
 		$scope  = $this->read_scope_from_request();
@@ -227,7 +227,7 @@ class WCFR_Admin_Tools_Page {
 			'applied',
 			sprintf(
 				/* translators: %d post ID. */
-				__( 'Applied to post #%d.', 'content-find-replace' ),
+				__( 'Applied to post #%d.', 'all-the-content-changes' ),
 				$post_id
 			)
 		);
@@ -244,7 +244,7 @@ class WCFR_Admin_Tools_Page {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by assert_admin_action() above.
 		$run_id = isset( $_POST['run_id'] ) ? sanitize_text_field( (string) wp_unslash( $_POST['run_id'] ) ) : '';
 		if ( '' === $run_id ) {
-			$this->redirect_with_message( 'rollback', __( 'Run ID missing.', 'content-find-replace' ) );
+			$this->redirect_with_message( 'rollback', __( 'Run ID missing.', 'all-the-content-changes' ) );
 		}
 
 		$result = $this->migrations->rollback( $run_id );
@@ -252,7 +252,7 @@ class WCFR_Admin_Tools_Page {
 			'rollback',
 			sprintf(
 			/* translators: %d number of posts restored. */
-				__( 'Rollback restored %d posts.', 'content-find-replace' ),
+				__( 'Rollback restored %d posts.', 'all-the-content-changes' ),
 				(int) $result['restored_count']
 			)
 		);
@@ -273,7 +273,7 @@ class WCFR_Admin_Tools_Page {
 			return;
 		}
 
-		echo '<div class="notice notice-warning"><p><strong>' . esc_html__( 'Content Find Replace warnings:', 'content-find-replace' ) . '</strong></p><ul>';
+		echo '<div class="notice notice-warning"><p><strong>' . esc_html__( 'All the Content Changes warnings:', 'all-the-content-changes' ) . '</strong></p><ul>';
 		foreach ( array_unique( $errors ) as $error ) {
 			echo '<li>' . esc_html( $error ) . '</li>';
 		}
@@ -340,7 +340,7 @@ class WCFR_Admin_Tools_Page {
 	 */
 	private function assert_admin_action( string $nonce_action ): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You are not allowed to perform this action.', 'content-find-replace' ) );
+			wp_die( esc_html__( 'You are not allowed to perform this action.', 'all-the-content-changes' ) );
 		}
 
 		check_admin_referer( $nonce_action );

@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name:       Content Find Replace
- * Plugin URI:        https://wordpress.org/plugins/content-find-replace/
+ * Plugin Name:       All the Content Changes
+ * Plugin URI:        https://wordpress.org/plugins/all-the-content-changes/
  * Description:       Unlimited find/replace rules with a Wikimedia thumbnail rewrite preset, previewable migrations, and rollback support.
  * Version:           0.1.0
  * Requires at least: 6.0
@@ -9,7 +9,7 @@
  * Author:            Addshore
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       content-find-replace
+ * Text Domain:       all-the-content-changes
  * Domain Path:       /languages
  *
  * @package ContentFindReplace

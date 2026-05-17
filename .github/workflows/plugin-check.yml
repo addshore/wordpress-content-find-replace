@@ -14,7 +14,7 @@ jobs:
       - name: Run Plugin Check
         uses: wordpress/plugin-check-action@v1
         with:
-          slug: content-find-replace
+          slug: all-the-content-changes
           exclude-files: |
             .gitignore
             phpcs.xml.dist

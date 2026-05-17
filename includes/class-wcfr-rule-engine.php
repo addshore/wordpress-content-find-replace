@@ -160,7 +160,7 @@ class WCFR_Rule_Engine {
 		$replace     = isset( $rule['replace'] ) ? (string) $rule['replace'] : '';
 		$ignore_case = ! empty( $rule['ignore_case'] );
 		$use_regex   = ! empty( $rule['use_regex'] );
-		$rule_name   = isset( $rule['name'] ) ? (string) $rule['name'] : __( 'Unnamed rule', 'content-find-replace' );
+		$rule_name   = isset( $rule['name'] ) ? (string) $rule['name'] : __( 'Unnamed rule', 'all-the-content-changes' );
 
 		if ( '' === $find ) {
 			return array(
@@ -180,7 +180,7 @@ class WCFR_Rule_Engine {
 					'errors'  => array(
 						sprintf(
 							/* translators: %s: rule name. */
-							__( 'Regex rule skipped due to invalid pattern: %s', 'content-find-replace' ),
+							__( 'Regex rule skipped due to invalid pattern: %s', 'all-the-content-changes' ),
 							$rule_name
 						),
 					),
@@ -205,7 +205,7 @@ class WCFR_Rule_Engine {
 					'errors'  => array(
 						sprintf(
 							/* translators: %s: rule name. */
-							__( 'Regex execution failed for rule: %s', 'content-find-replace' ),
+							__( 'Regex execution failed for rule: %s', 'all-the-content-changes' ),
 							$rule_name
 						),
 					),

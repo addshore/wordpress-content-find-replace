@@ -160,7 +160,7 @@ class WCFR_Migrations {
 			return array(
 				'run_id'  => '',
 				'updated' => false,
-				'message' => __( 'Post not found.', 'content-find-replace' ),
+				'message' => __( 'Post not found.', 'all-the-content-changes' ),
 			);
 		}
 
@@ -172,7 +172,7 @@ class WCFR_Migrations {
 			return array(
 				'run_id'  => '',
 				'updated' => false,
-				'message' => __( 'No changes to apply.', 'content-find-replace' ),
+				'message' => __( 'No changes to apply.', 'all-the-content-changes' ),
 			);
 		}
 
@@ -227,7 +227,7 @@ class WCFR_Migrations {
 		if ( ! isset( $runs[ $run_id ] ) || ! is_array( $runs[ $run_id ] ) ) {
 			return array(
 				'restored_count' => 0,
-				'message'        => __( 'Migration run not found.', 'content-find-replace' ),
+				'message'        => __( 'Migration run not found.', 'all-the-content-changes' ),
 			);
 		}
 
@@ -260,7 +260,7 @@ class WCFR_Migrations {
 
 		return array(
 			'restored_count' => $restored,
-			'message'        => __( 'Rollback complete.', 'content-find-replace' ),
+			'message'        => __( 'Rollback complete.', 'all-the-content-changes' ),
 		);
 	}
 

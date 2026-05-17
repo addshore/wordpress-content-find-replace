@@ -86,7 +86,7 @@ class WCFR_Plugin {
 	 * @return string
 	 */
 	public function filter_content( string $content ): string {
-		return $this->engine->filter( $content, 'the_content' );
+		return self::sanitize_filtered_output( $this->engine->filter( $content, 'the_content' ) );
 	}
 
 	/**
@@ -96,6 +96,16 @@ class WCFR_Plugin {
 	 * @return string
 	 */
 	public function filter_excerpt( string $excerpt ): string {
-		return $this->engine->filter( $excerpt, 'the_excerpt' );
+		return self::sanitize_filtered_output( $this->engine->filter( $excerpt, 'the_excerpt' ) );
+	}
+
+	/**
+	 * Sanitize filtered output before WordPress renders it.
+	 *
+	 * @param string $content Filtered content.
+	 * @return string
+	 */
+	public static function sanitize_filtered_output( string $content ): string {
+		return wp_kses_post( $content );
 	}
 }

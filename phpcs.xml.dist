@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="WordPress Content Find Replace">
+<ruleset name="WordPress All the Content Changes">
   <description>WordPress coding standards for plugin sources.</description>
   <rule ref="WordPress" />
   <rule ref="WordPress-Extra" />

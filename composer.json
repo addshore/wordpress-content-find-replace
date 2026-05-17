@@ -1,6 +1,6 @@
 {
-  "name": "addshore/wordpress-content-find-replace",
-  "description": "WordPress content find/replace plugin with Wikimedia thumbnail rewrite support",
+  "name": "all-the-content-changes/plugin",
+  "description": "All the Content Changes WordPress plugin with Wikimedia thumbnail rewrite support",
   "type": "wordpress-plugin",
   "license": "GPL-2.0-or-later",
   "require": {
@@ -15,11 +15,11 @@
     "lint": "phpcs --standard=phpcs.xml.dist .",
     "test": "phpunit -c phpunit.xml.dist",
     "build": [
-      "rm -rf build/wordpress-content-find-replace",
-      "mkdir -p build/wordpress-content-find-replace",
-      "rm -f build/wordpress-content-find-replace.zip",
-      "rsync -a ./ build/wordpress-content-find-replace/ --exclude '.git' --exclude '.github' --exclude '.gitignore' --exclude 'build' --exclude 'tests' --exclude 'vendor' --exclude 'node_modules' --exclude '.DS_Store' --exclude '.phpunit.result.cache' --exclude 'composer.lock' --exclude 'phpcs.xml.dist' --exclude 'phpunit.xml.dist'",
-      "cd build && zip -r wordpress-content-find-replace.zip wordpress-content-find-replace && rm -rf wordpress-content-find-replace"
+      "rm -rf build/all-the-content-changes",
+      "mkdir -p build/all-the-content-changes",
+      "rm -f build/all-the-content-changes.zip",
+      "rsync -a ./ build/all-the-content-changes/ --exclude '.git' --exclude '.github' --exclude '.gitignore' --exclude 'build' --exclude 'tests' --exclude 'vendor' --exclude 'node_modules' --exclude '.DS_Store' --exclude '.phpunit.result.cache' --exclude 'composer.lock' --exclude 'phpcs.xml.dist' --exclude 'phpunit.xml.dist'",
+      "cd build && zip -r all-the-content-changes.zip all-the-content-changes && rm -rf all-the-content-changes"
     ]
   },
   "config": {

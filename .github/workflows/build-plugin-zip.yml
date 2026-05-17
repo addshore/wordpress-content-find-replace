@@ -24,7 +24,7 @@ jobs:
       - name: Upload ZIP artifact
         uses: actions/upload-artifact@v4
         with:
-          name: wordpress-content-find-replace-zip-${{ github.sha }}
-          path: build/wordpress-content-find-replace.zip
+          name: all-the-content-changes-zip-${{ github.sha }}
+          path: build/all-the-content-changes.zip
           if-no-files-found: error
           retention-days: 30

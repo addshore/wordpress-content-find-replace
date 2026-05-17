@@ -1,4 +1,4 @@
-=== Content Find Replace ===
+=== All the Content Changes ===
 Contributors: addshore
 Tags: find, replace, regex, content, migration
 Requires at least: 6.0
@@ -12,7 +12,7 @@ Unlimited content find/replace rules with regex support, Wikimedia thumbnail rew
 
 == Description ==
 
-Content Find Replace provides:
+All the Content Changes provides:
 
 * Unlimited rule-based find/replace for post content.
 * Plain text or regex matching.
@@ -24,7 +24,7 @@ Content Find Replace provides:
 
 1. Upload the plugin folder to `/wp-content/plugins/` or install via the Plugins screen.
 2. Activate the plugin.
-3. Open **Tools → Content Find Replace**.
+3. Open **Tools → All the Content Changes**.
 4. Add custom rules and/or click **Install Wikimedia Preset Rule**.
 5. Save settings.
 6. (Optional) Use the migration section to preview and apply DB rewrites.
@@ -36,11 +36,11 @@ The repository includes a local container setup in `docker-compose.yml`.
 1. Start services:
 `docker compose up -d db wordpress`
 2. Install WordPress (first run only):
-`docker compose run --rm wpcli core install --url=http://localhost:8080 --title='Content Find Replace Dev' --admin_user=admin --admin_password=admin --admin_email=admin@example.com --skip-email`
+`docker compose run --rm wpcli core install --url=http://localhost:8080 --title='All the Content Changes Dev' --admin_user=admin --admin_password=admin --admin_email=admin@example.com --skip-email`
 3. Activate this plugin:
-`docker compose run --rm wpcli plugin activate content-find-replace/wordpress-content-find-replace.php --url=http://localhost:8080`
+`docker compose run --rm wpcli plugin activate all-the-content-changes/all-the-content-changes.php --url=http://localhost:8080`
 4. Validate it is active and loaded:
-`docker compose run --rm wpcli plugin is-active content-find-replace/wordpress-content-find-replace.php --url=http://localhost:8080`
+`docker compose run --rm wpcli plugin is-active all-the-content-changes/all-the-content-changes.php --url=http://localhost:8080`
 `docker compose run --rm wpcli eval 'echo class_exists("WCFR_Plugin") ? "WCFR_Plugin loaded" : "WCFR_Plugin missing";' --url=http://localhost:8080`
 
 Use `http://localhost:8080` for the frontend and `http://localhost:8080/wp-admin` for admin.
